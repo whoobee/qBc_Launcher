@@ -1,0 +1,44 @@
+{
+  "scripts": [
+    {
+      "name": "MQTT Broker",
+      "script": "../qBc_Network/main.py",
+      "venv": "../qBc_Network/.venv",
+      "args": [],
+      "delay_ms": 0,
+      "wait_prev": false
+    },
+    {
+      "name": "Servo Controller",
+      "script": "../qBc_Servos/servo_controller.py",
+      "venv": "../qBc_Servos/.venv",
+      "args": [],
+      "delay_ms": 0,
+      "wait_prev": true
+    },
+    {
+      "name": "Animation",
+      "script": "../qBc_Animation/main.py",
+      "venv": "../qBc_Animation/.venv",
+      "args": [],
+      "delay_ms": 0,
+      "wait_prev": true
+    },
+    {
+      "name": "Audio Service",
+      "script": "../qBc_Audio/audio_service.py",
+      "venv": "../qBc_Audio/.venv",
+      "args": [],
+      "delay_ms": 0,
+      "wait_prev": true
+    },
+    {
+      "name": "AI Voice",
+      "script": "../qBc_Ai/main.py",
+      "venv": "../qBc_Ai/.venv",
+      "args": ["--piper-model", "piper_models/en_US-lessac-medium.onnx"],
+      "delay_ms": 0,
+      "wait_prev": true
+    }
+  ]
+}
