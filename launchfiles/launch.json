@@ -33,6 +33,14 @@
       "wait_prev": true
     },
     {
+      "name": "Vision",
+      "script": "../qBc_Vision/vision_service.py",
+      "venv": "../qBc_Vision/.venv",
+      "args": [],
+      "delay_ms": 0,
+      "wait_prev": true
+    },
+    {
       "name": "AI Voice",
       "script": "../qBc_Ai/main.py",
       "venv": "../qBc_Ai/.venv",
