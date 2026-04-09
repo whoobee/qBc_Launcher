@@ -9,9 +9,9 @@
       "wait_prev": false
     },
     {
-      "name": "Servo Controller",
-      "script": "../qBc_Servos/servo_controller.py",
-      "venv": "../qBc_Servos/.venv",
+      "name": "Serial Bridge",
+      "script": "../qBc_Network/serial_bridge.py",
+      "venv": "../qBc_Network/.venv",
       "args": [],
       "delay_ms": 0,
       "wait_prev": true
