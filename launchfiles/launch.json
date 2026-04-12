@@ -9,6 +9,14 @@
       "wait_prev": false
     },
     {
+      "name": "System Maintainer",
+      "script": "../qBc_SystemMaintainer/main.py",
+      "venv": "../qBc_SystemMaintainer/.venv",
+      "args": [],
+      "delay_ms": 0,
+      "wait_prev": true
+    },
+    {
       "name": "Serial Bridge",
       "script": "../qBc_Network/serial_bridge.py",
       "venv": "../qBc_Network/.venv",
@@ -36,6 +44,14 @@
       "name": "Vision",
       "script": "../qBc_Vision/vision_service.py",
       "venv": "../qBc_Vision/.venv",
+      "args": [],
+      "delay_ms": 0,
+      "wait_prev": true
+    },
+    {
+      "name": "Navigation",
+      "script": "../qBc_Navigation/main.py",
+      "venv": "../qBc_Navigation/.venv",
       "args": [],
       "delay_ms": 0,
       "wait_prev": true
