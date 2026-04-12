@@ -71,14 +71,6 @@
       "args": ["--tree", "trees/default.yaml"],
       "delay_ms": 0,
       "wait_prev": true
-    },
-    {
-      "name": "Configuration Manager",
-      "script": "../qBc_ConfigurationManager/main.py",
-      "venv": "../qBc_ConfigurationManager/.venv",
-      "args": [],
-      "delay_ms": 0,
-      "wait_prev": true
     }
   ]
 }
