@@ -135,14 +135,42 @@ class LauncherTUI(App):
         log.write(text)
 
     def _start_process(self, entry: dict) -> subprocess.Popen:
-        """Start a subprocess using the same bash+activate pattern as before."""
-        script_path = str(Path(entry["script"]).resolve())
+        """Start a subprocess.
+
+        Supports three modes via the entry dict:
+          - "command" (list[str]): Run a raw command directly (no Python/venv).
+          - "script" + "venv": Activate venv, then run Python script.
+          - "script" only: Run with current Python interpreter.
+        """
         args = entry.get("args", [])
-        venv = entry.get("venv", "")
-        script_dir = str(Path(script_path).parent)
 
         env = os.environ.copy()
         env["PYTHONUNBUFFERED"] = "1"
+
+        # Raw command mode (for non-Python binaries like axllm, whisper_srv)
+        if "command" in entry:
+            cwd = entry.get("cwd", str(Path(__file__).parent))
+            resolved_args = []
+            for a in args:
+                if not a.startswith("-") and (a.startswith("..") or a.startswith(".")):
+                    a = str((Path(cwd) / a).resolve())
+                resolved_args.append(a)
+            cmd = list(entry["command"]) + resolved_args
+            proc = subprocess.Popen(
+                cmd,
+                cwd=cwd,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                env=env,
+                text=True,
+                bufsize=1,
+            )
+            return proc
+
+        # Python script mode
+        script_path = str(Path(entry["script"]).resolve())
+        venv = entry.get("venv", "")
+        script_dir = str(Path(script_path).parent)
 
         if venv:
             activate_path = str((Path(venv).resolve() / "bin" / "activate"))
@@ -248,9 +276,13 @@ class LauncherTUI(App):
                     self.call_from_thread(
                         self._set_label, i, f"[green]RUNNING[/] (PID {proc.pid})"
                     )
+                    if "script" in entry:
+                        started_name = Path(entry["script"]).name
+                    else:
+                        started_name = " ".join(entry["command"])
                     self.call_from_thread(
                         self._write_log, i,
-                        f"Started {Path(entry['script']).name} (PID {proc.pid})"
+                        f"Started {started_name} (PID {proc.pid})"
                     )
                     # Spawn a reader thread for this node's output
                     reader = threading.Thread(
@@ -264,7 +296,7 @@ class LauncherTUI(App):
                         self.call_from_thread(self._write_log, i, f"[red]{exc}[/red]")
                     except Exception:
                         pass
-                    return
+                    continue
 
         coord = threading.Thread(target=_coordinator, daemon=True)
         coord.start()

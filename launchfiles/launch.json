@@ -57,10 +57,29 @@
       "wait_prev": true
     },
     {
+      "name": "LLM Server",
+      "command": ["axllm", "serve"],
+      "args": ["/home/whoobee/qB_Companion/qBc_Ai/models/Qwen3.5-4B"],
+      "delay_ms": 0,
+      "wait_prev": true
+    },
+    {
+      "name": "STT Server",
+      "command": ["python3", "/opt/qbc/npu/whisper/server/whisper_server.py"],
+      "delay_ms": 5000,
+      "wait_prev": true
+    },
+    {
+      "name": "TTS Server",
+      "command": ["python3", "/opt/qbc/npu/melotts/server/melotts_server.py"],
+      "delay_ms": 0,
+      "wait_prev": true
+    },
+    {
       "name": "AI Service",
       "script": "../qBc_Ai/main.py",
       "venv": "../qBc_Ai/.venv",
-      "args": ["--piper-model", "piper_models/en_US-lessac-medium.onnx"],
+      "args": [],
       "delay_ms": 0,
       "wait_prev": true
     },
